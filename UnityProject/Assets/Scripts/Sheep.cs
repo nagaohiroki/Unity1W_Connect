@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public class Box : MonoBehaviour
+public class Sheep : MonoBehaviour
 {
 	[SerializeField]
 	Rigidbody mRigid = null;
@@ -28,6 +28,7 @@ public class Box : MonoBehaviour
 		var vec  = (Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position));
 		vec.z = 0.0f;
 		var player = Instantiate(this, transform.position, Quaternion.identity);
+		player.name = "Sheep";
 		player.Player();
 		NotPlayer();
 	}
