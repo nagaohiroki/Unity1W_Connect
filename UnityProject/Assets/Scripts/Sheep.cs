@@ -1,25 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class Sheep : MonoBehaviour
 {
 	[SerializeField]
 	Rigidbody mRigid = null;
 	[SerializeField]
 	Transform mCameraHandle = null;
+	[SerializeField]
+	Text mTelop = null;
+	[SerializeField]
+	Wolf mWolf = null;
 	bool mIsPlayer = true;
-	void Update()
-	{
-		if(mIsPlayer)
-		{
-			mCameraHandle.position = transform.position;
-			Shot();
-		}
-	}
 	void Shot()
 	{
-		if(!Input.GetButtonDown("Fire1"))
-		{
-			return;
-		}
 		if(mRigid == null)
 		{
 			return;
@@ -42,5 +36,36 @@ public class Sheep : MonoBehaviour
 	{
 		mRigid.constraints = RigidbodyConstraints.FreezeAll;
 		mIsPlayer = false;
+	}
+	void Update()
+	{
+		if(!mIsPlayer)
+		{
+			return;
+		}
+		mCameraHandle.position = transform.position;
+		if(Input.GetButtonDown("Fire1"))
+		{
+			Shot();
+		}
+		if(Input.GetKey(KeyCode.Space))
+		{
+			if(mTelop.gameObject.activeSelf)
+			{
+				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			}
+		}
+	}
+	void OnTriggerEnter(Collider inColl)
+	{
+		if(inColl.tag != "Finish")
+		{
+			return;
+		}
+		if(mTelop == null)
+		{
+			return;
+		}
+		mTelop.gameObject.SetActive(true);
 	}
 }
