@@ -8,12 +8,11 @@ public class Sheep : MonoBehaviour
 	bool mIsPlayer = true;
 	void Update()
 	{
-		if(!mIsPlayer)
+		if(mIsPlayer)
 		{
-			return;
+			mCameraHandle.position = transform.position;
+			Shot();
 		}
-		mCameraHandle.position = transform.position;
-		Shot();
 	}
 	void Shot()
 	{
@@ -36,7 +35,7 @@ public class Sheep : MonoBehaviour
 	{
 		var vec  = (Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position));
 		vec.z = 0.0f;
-		mRigid.AddForce(vec.normalized, ForceMode.VelocityChange);
+		mRigid.AddForce(vec.normalized * 10.0f, ForceMode.VelocityChange);
 		mIsPlayer = true;
 	}
 	void NotPlayer()
